@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Маршрут прогулки</title>
+    <link rel="stylesheet" href="../static/answer.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=3c68bf7b-dc05-4644-99b8-d78436f2576c"
+            type="text/javascript"></script>
+    <script>
+        function init() {
+            path_position = {{ total_path|tojson }};
+
+            multiRoute = new ymaps.multiRouter.MultiRoute({
+                referencePoints: path_position,
+                params: {
+                    routingMode: 'pedestrian'
+                }
+            }, {
+                boundsAutoApply: true
+            });
+
+            let myMap = new ymaps.Map('map', {
+                center: [56.1505, 47.1993],
+                zoom: 12
+            }, {
+                buttonMaxWidth: 500
+            });
+
+            myMap.geoObjects.add(multiRoute);
+        }
+
+        ymaps.ready(init);
+    </script>
+</head>
+<body>
+<div id="map"></div>
+<a href="http://127.0.0.1:5000" class="back-button">Назад</a>
+<form id="myForm" method="post" action="./answer2" onsubmit="showLoading()">
+        <button type="submit" value="submit" id="button">посмотреть загадки</button>
+</form>
+</body>
+</html>

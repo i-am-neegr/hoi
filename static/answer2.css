@@ -1,0 +1,20 @@
+#qr {
+    height: 300px;
+    width: 300px;
+    margin: 10px auto 20px;
+    display: block;
+
+}
+
+#list {
+    width: 960px;
+    position: relative;
+    margin: 0 auto;
+}
+#list ul {
+    display: table;
+    margin: 0 auto;
+    width: 200px;
+    font-size: 200%;
+    
+}

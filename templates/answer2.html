@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>response</title>
+    <link rel="stylesheet" href="../static/answer2.css">
+</head>
+<div>
+    <img src="https://leader-chem.ru/upload/qr-code.png" alt="qr-code" id="qr">
+</div>
+<div id="list">
+    <ul id="myList"></ul>
+</div>
+<form id="myForm" method="post" action="./answer" onsubmit="showLoading()">
+    <button type="submit" value="submit" id="button">Завершить создание</button>
+</form>
+<a href="#" onclick="doSomethingCool()">asdfgdfg</a>
+<script>
+    function doSomethingCool(div, button, input, answer) {
+        console.log(answer)
+        p_old = div.getElementsByTagName("p").item(0)
+        if (p_old !== null) {
+            p_old.remove()
+        }
+        if (input.value === answer) {
+            p = document.createElement("p")
+            p.innerText = "верно"
+            p.style = "color: green;"
+            div.appendChild(p)
+        } else {
+
+            p = document.createElement("p")
+            p.innerText = "не верно"
+            p.style = "color: red;"
+            div.appendChild(p)
+        }
+    }
+</script>
+<script>
+    path = {{path | tojson}};
+    json_path = {{json_path | tojson}};
+    console.log(json_path);
+    console.log(path);
+    let list = document.getElementById("myList");
+    for (i = 0; i < path.length; ++i) {
+        let answer;
+        console.log(i);
+        let ol = document.createElement('ol');
+        let div = document.createElement('div');
+        ol.innerText = json_path[path[i]]["text"];
+        let input = document.createElement('input');
+        input.id = "input" + i;
+        let button = document.createElement('button');
+        button.id = "button" + i;
+        button.innerText = "ответить";
+        answer = json_path[path[i]]["ans"];
+        button.addEventListener("click", () => {
+            doSomethingCool(div, button, input, answer)
+        })
+        img = document.createElement('img');
+        img.src = json_path[path[i]]["img"];
+        img.style.width = "500px";
+        img.style.height = "300px";
+        input.style.fontSize = "50";
+        input.style.width = "300px";
+        input.style.height = "30px";
+        div.appendChild(img);
+        div.appendChild(ol);
+        div.appendChild(input);
+        div.appendChild(button);
+        list.appendChild(div);
+
+
+    }
+</script>
+</body>
+</html>
